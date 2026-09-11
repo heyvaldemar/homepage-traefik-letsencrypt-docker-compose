@@ -126,7 +126,11 @@ Every service carries memory and CPU limits plus reservations as compose-level d
 
 ## Container hardening
 
-Every service runs with `security_opt: no-new-privileges:true`. Homepage, the seeding container and the backups sidecar run with `cap_drop: [ALL]`; Traefik adds back `NET_BIND_SERVICE` and the sidecar the three it needs to write archives it owns. Homepage adds back nothing — and that is only possible because it does not have the Docker socket, which is the point made above.
+Every service runs with `security_opt: no-new-privileges:true` and `cap_drop: [ALL]`, adding back only what each one demonstrably needs: Traefik `NET_BIND_SERVICE`, the backups sidecar and the seeding container the three that let them write files into a directory they do not own, and Homepage exactly one — `DAC_OVERRIDE`.
+
+That last one is worth a sentence, because it is not about the network. Homepage writes a logs directory inside your config directory on every start, that directory belongs to whichever uid owns it on your host, and this container runs as root — which without `DAC_OVERRIDE` cannot create anything inside a directory it does not own. The symptom is a server that starts, passes its own health check, and answers 500 to every page. The alternative would be chowning your config directory to a uid this template picked, which takes a directory we have just called yours and hands it to somebody else.
+
+What Homepage still does not have is the Docker socket — and with a direct socket mount, `no-new-privileges` is exactly what would break it.
 
 ## Testing
 

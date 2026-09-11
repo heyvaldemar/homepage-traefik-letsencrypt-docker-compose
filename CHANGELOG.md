@@ -62,6 +62,14 @@ fleet standard established in
   with 400 while the container reports itself healthy, because its own probe
   talks to `127.0.0.1:3000` and never sends the header. Found on this
   template's first local boot, on port 8443.
+- **Homepage needs `DAC_OVERRIDE`, and nothing else.** It writes a logs
+  directory inside the config directory on every start; that directory belongs
+  to whichever uid owns it on the host, and the container runs as root, which
+  without that capability cannot create anything inside a directory it does not
+  own. The symptom is the confusing kind: the server starts, passes its own
+  health check, and answers 500 to every page with `EACCES: permission denied,
+  mkdir '/app/config/logs'` in its log. Found by CI on a real host; Docker
+  Desktop virtualises bind-mount ownership and never shows it.
 - **The seeding container hands the files to the config directory's owner.**
   The first version used `cp -a` with every capability dropped, which worked on
   the maintainer's Docker Desktop — where bind-mount ownership is virtualised —

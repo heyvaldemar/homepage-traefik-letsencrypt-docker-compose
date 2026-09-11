@@ -144,12 +144,26 @@ services:
     # Hardening: no privilege escalation via setuid binaries
     security_opt:
       - no-new-privileges:true
-    # A Next.js server reading YAML and making outbound HTTP requests. It needs
-    # no Linux capability. Note that this only works because the Docker socket
-    # is not mounted here: with a direct socket mount, no-new-privileges is
-    # exactly what breaks it.
+    # A Next.js server reading YAML and making outbound HTTP requests. One
+    # capability, and it is not for the network.
+    #
+    # Homepage writes a logs directory inside its config directory on every
+    # start. That directory is yours - it belongs to whichever uid owns it on
+    # your host - and this container runs as root, which without DAC_OVERRIDE
+    # cannot create anything inside a directory it does not own. The symptom is
+    # a server that starts, passes its own health check, and answers 500 to
+    # every page: `EACCES: permission denied, mkdir '/app/config/logs'`.
+    #
+    # DAC_OVERRIDE is the narrow answer. The alternative - chowning your config
+    # directory to a uid this file picked - takes a directory the README calls
+    # yours and hands it to somebody else.
+    #
+    # Note what is still absent: the Docker socket. With a direct socket mount,
+    # no-new-privileges is exactly what breaks this container.
     cap_drop:
       - ALL
+    cap_add:
+      - DAC_OVERRIDE
     stop_grace_period: ${HOMEPAGE_STOP_GRACE_PERIOD:-30s}
     # Resource limits as .env-overridable defaults; the override survives every
     # git pull.
