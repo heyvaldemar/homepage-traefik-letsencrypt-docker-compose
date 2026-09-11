@@ -1,0 +1,19 @@
+---
+# https://gethomepage.dev/configs/docker/
+#
+# Homepage does NOT mount the Docker socket, and this file is why it does not
+# need to. It reaches the daemon through a proxy that exposes only the
+# container endpoints, read-only: CONTAINERS=1 and POST=0 in the compose file.
+#
+# `host` is the proxy's SERVICE name, resolved by Docker's own DNS on
+# homepage-network. Its port is never published to the host.
+#
+# There is a second reason beyond the obvious one. Mounting the socket into
+# Homepage directly AND keeping `no-new-privileges: true` fails with
+# `connect EACCES` - the hardening blocks the supplementary-group access
+# needed to open the socket file. The advice you will find is to drop the
+# hardening. This keeps both.
+
+local-docker:
+  host: dockerproxy
+  port: 2375

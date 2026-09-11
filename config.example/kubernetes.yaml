@@ -1,0 +1,5 @@
+---
+# https://gethomepage.dev/configs/kubernetes/
+#
+# Left empty on purpose. Homepage expects the file to exist and logs about it
+# when it does not; this stack has no Kubernetes cluster to read.

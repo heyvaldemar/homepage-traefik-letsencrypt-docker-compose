@@ -1,0 +1,31 @@
+---
+# https://gethomepage.dev/configs/services/
+#
+# Two worked examples, and they are examples: replace them with your own.
+#
+# The first is a plain link - a name, an icon, a URL. That is all a service has
+# to be, and most of a useful dashboard is nothing more than this.
+#
+# The second reads live container status through the socket proxy. `server`
+# names an entry in docker.yaml and `container` names the container. This is
+# read-only by construction: the proxy denies every write, so a widget can show
+# you that something is unhealthy and can never act on it.
+
+- Infrastructure:
+    - Traefik:
+        icon: traefik.png
+        href: https://traefik.example.com
+        description: Reverse proxy and certificates
+
+    - Homepage:
+        icon: homepage.png
+        href: https://home.example.com
+        description: This dashboard
+        server: local-docker
+        container: homepage
+
+- Applications:
+    - Example:
+        icon: docker.png
+        href: https://example.com
+        description: Replace this with something of your own

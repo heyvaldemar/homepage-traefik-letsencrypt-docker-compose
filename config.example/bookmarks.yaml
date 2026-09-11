@@ -1,0 +1,13 @@
+---
+# https://gethomepage.dev/configs/bookmarks/
+#
+# Links that are not services: documentation, a registry, whatever you open
+# often. Replace these.
+
+- Reference:
+    - Homepage docs:
+        - abbr: HP
+          href: https://gethomepage.dev/
+    - Docker Hub:
+        - abbr: DH
+          href: https://hub.docker.com/

@@ -1,0 +1,30 @@
+---
+# https://gethomepage.dev/configs/settings/
+#
+# Everything in this directory is yours. It was copied here once, on the first
+# start, from config.example/ in the repository - and nothing will overwrite it
+# again. New options appear in config.example/ after an update, where you can
+# read them and copy across what you want.
+
+title: Homepage
+
+# Groups are defined in services.yaml; this only controls how they render.
+# Remove a group from here and it falls back to the default layout.
+layout:
+  Infrastructure:
+    style: row
+    columns: 3
+  Applications:
+    style: row
+    columns: 3
+
+theme: dark
+color: slate
+headerStyle: boxedWidgets
+
+# The search box at the top. `provider` takes a name from the built-in list or
+# a URL with {query} in it.
+quicklaunch:
+  searchDescriptions: true
+  hideInternetSearch: false
+  provider: duckduckgo
