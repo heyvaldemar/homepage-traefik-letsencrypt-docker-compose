@@ -103,6 +103,16 @@ services:
       - no-new-privileges:true
     cap_drop:
       - ALL
+    cap_add:
+      # Three, and each one is needed for a reason worth stating. The config
+      # directory belongs to you, not to this container: it may be owned by
+      # any uid and this runs as root, so DAC_OVERRIDE is what lets it write
+      # there at all. CHOWN and FOWNER are what let it hand the files it just
+      # wrote to that same owner - because files you cannot edit without sudo,
+      # in a directory you were told is yours, are not much use.
+      - CHOWN
+      - DAC_OVERRIDE
+      - FOWNER
     deploy:
       resources:
         limits:
@@ -116,8 +126,10 @@ services:
       if [ -n "$$(ls -A /config 2>/dev/null)" ]; then
         echo "the config directory already has files; leaving every one of them alone";
       else
-        echo "seeding the config directory from config.example";
-        cp -a /seed/. /config/;
+        OWNER="$$(stat -c %u /config)"; GROUP="$$(stat -c %g /config)";
+        echo "seeding the config directory from config.example, as $$OWNER:$$GROUP";
+        cp -r /seed/. /config/;
+        chown -R "$$OWNER:$$GROUP" /config;
         ls -1 /config | sed "s/^/  /";
       fi'
     volumes:

@@ -62,6 +62,16 @@ fleet standard established in
   with 400 while the container reports itself healthy, because its own probe
   talks to `127.0.0.1:3000` and never sends the header. Found on this
   template's first local boot, on port 8443.
+- **The seeding container hands the files to the config directory's owner.**
+  The first version used `cp -a` with every capability dropped, which worked on
+  the maintainer's Docker Desktop — where bind-mount ownership is virtualised —
+  and failed on a real host with `Permission denied` for every file. Two
+  separate things were wrong: a root process without `DAC_OVERRIDE` cannot
+  write into a directory owned by someone else, and `cp -a` tries to preserve
+  ownership, which needs `CHOWN`. It now copies without preserving and then
+  chowns everything to whatever uid owns the directory — because files you
+  cannot edit without sudo, in a directory the README calls yours, are not much
+  use.
 - **Homepage's container tags carry the leading `v`** (`v2.3.0`). The freshness
   check compares the git tag as it comes rather than stripping it.
 - **There is no Buffering middleware, deliberately.** Traefik streams bodies
