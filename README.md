@@ -120,6 +120,8 @@ chmod +x ./*.sh
 ./homepage-restore-config.sh
 ```
 
+It lists the backups and asks, or takes a file name as its argument; it reads every path from the running backups container, and CI runs it on every push.
+
 ## Resource limits
 
 Every service carries memory and CPU limits plus reservations as compose-level defaults: the same values CI boots the stack under. What moves these numbers is the number of widgets polling backends, not the number of links on the page. Override any of them in `.env` and the override survives every `git pull`. If a service is OOM-killed, `docker inspect <container> --format '{{.State.OOMKilled}}'` says so.
