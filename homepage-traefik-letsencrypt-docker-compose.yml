@@ -280,9 +280,9 @@ services:
       - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
       # Homepage's widgets fan out to whatever you point them at, and a slow
       # backend behind one of them should not become a failed dashboard.
-      - "--entrypoints.websecure.transport.respondingTimeouts.readTimeout=${HOMEPAGE_READ_TIMEOUT:-0s}"
-      - "--entrypoints.websecure.transport.respondingTimeouts.writeTimeout=${HOMEPAGE_WRITE_TIMEOUT:-0s}"
-      - "--entrypoints.websecure.transport.respondingTimeouts.idleTimeout=${HOMEPAGE_IDLE_TIMEOUT:-600s}"
+      - "--entrypoints.websecure.transport.respondingTimeouts.readTimeout=${TRAEFIK_READ_TIMEOUT:-${HOMEPAGE_READ_TIMEOUT:-0s}}"
+      - "--entrypoints.websecure.transport.respondingTimeouts.writeTimeout=${TRAEFIK_WRITE_TIMEOUT:-${HOMEPAGE_WRITE_TIMEOUT:-0s}}"
+      - "--entrypoints.websecure.transport.respondingTimeouts.idleTimeout=${TRAEFIK_IDLE_TIMEOUT:-${HOMEPAGE_IDLE_TIMEOUT:-600s}}"
       # Enable the Docker provider to detect containers and their labels
       - "--providers.docker=true"
       # Point Traefik to the Docker socket
