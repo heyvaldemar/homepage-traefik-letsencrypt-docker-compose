@@ -89,7 +89,7 @@ Your config directory is gitignored, so it is never a "local change" and never b
 
 Four images pinned to `tag@sha256:<digest>` as interpolation defaults in the compose `x-images` block:
 
-- [`ghcr.io/gethomepage/homepage`](https://github.com/gethomepage/homepage/pkgs/container/homepage): the dashboard, latest stable (v2.6.0)
+- [`ghcr.io/gethomepage/homepage`](https://github.com/gethomepage/homepage/pkgs/container/homepage): the dashboard, latest stable (v2.7.0)
 - [`ghcr.io/tecnativa/docker-socket-proxy`](https://github.com/Tecnativa/docker-socket-proxy): the only container that touches the socket
 - [`traefik`](https://hub.docker.com/_/traefik): reverse proxy
 - [`alpine`](https://hub.docker.com/_/alpine): the seeding container and the backups sidecar
