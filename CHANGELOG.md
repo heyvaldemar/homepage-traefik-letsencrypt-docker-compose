@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+_(no unreleased changes yet)_
+
+## [1.1.12] - 2026-10-24
+
 ### Changed
 
 - **`ghcr.io/gethomepage/homepage:v2.6.0` moved to `ghcr.io/gethomepage/homepage:v2.7.0`.** The freshness check reported the lag; the deploy job booted the stack on the new image before this landed.
@@ -241,7 +245,8 @@ fleet standard established in
   that takes four seconds to produce: 0.03s to the first byte without it, 4.15s
   with it.
 
-[Unreleased]: https://github.com/heyvaldemar/homepage-traefik-letsencrypt-docker-compose/compare/v1.1.11...HEAD
+[Unreleased]: https://github.com/heyvaldemar/homepage-traefik-letsencrypt-docker-compose/compare/v1.1.12...HEAD
+[1.1.12]: https://github.com/heyvaldemar/homepage-traefik-letsencrypt-docker-compose/compare/v1.1.11...v1.1.12
 [1.1.11]: https://github.com/heyvaldemar/homepage-traefik-letsencrypt-docker-compose/compare/v1.1.10...v1.1.11
 [1.1.10]: https://github.com/heyvaldemar/homepage-traefik-letsencrypt-docker-compose/compare/v1.1.9...v1.1.10
 [1.1.9]: https://github.com/heyvaldemar/homepage-traefik-letsencrypt-docker-compose/compare/v1.1.8...v1.1.9
