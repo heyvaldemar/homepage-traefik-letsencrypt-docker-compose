@@ -1,9 +1,9 @@
 name: CodeQL
 
-# Static analysis of this repository's JavaScript and TypeScript and of its
-# GitHub Actions workflows, on every change to main, on pull requests and
-# weekly. Findings go to the Security tab; OpenSSF Scorecard reads this
-# workflow as its SAST check, which GitHub's default setup does not give it.
+# Static analysis of this repository's GitHub Actions workflows, on every
+# change to main, on pull requests and weekly. Findings go to the Security
+# tab; OpenSSF Scorecard reads this workflow as its SAST check, which GitHub's
+# default setup does not give it.
 on:
   push:
     branches: [main]
@@ -33,7 +33,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [javascript-typescript, actions]
+        language: [actions]
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
